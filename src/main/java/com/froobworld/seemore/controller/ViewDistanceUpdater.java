@@ -6,16 +6,22 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.entity.Player;
 
 import java.util.Set;
 import java.util.UUID;
 
+import com.froobworld.seemore.SeeMore;
+
 public class ViewDistanceUpdater implements Listener {
     private final ViewDistanceController controller;
+    private final SeeMore seeMore;
     private final Set<UUID> seenBefore = Sets.newConcurrentHashSet();
 
-    public ViewDistanceUpdater(ViewDistanceController viewDistanceController) {
+    public ViewDistanceUpdater(ViewDistanceController viewDistanceController, SeeMore seeMore) {
         this.controller = viewDistanceController;
+        this.seeMore = seeMore;
     }
 
     @EventHandler
@@ -38,6 +44,15 @@ public class ViewDistanceUpdater implements Listener {
     @EventHandler
     private void onWorldChange(PlayerChangedWorldEvent event) {
         controller.setTargetViewDistance(event.getPlayer(), event.getPlayer().getClientViewDistance(), false, false);
+    }
+
+    @EventHandler
+    private void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        // 延迟10tick（0.5秒）后主动根据客户端视距调整服务器视距
+        seeMore.getSchedulerHook().runTaskDelayed(() -> {
+            controller.setTargetViewDistance(player, player.getClientViewDistance(), false, true);
+        }, 10L);
     }
 
 }
