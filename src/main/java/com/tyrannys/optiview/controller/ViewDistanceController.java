@@ -18,11 +18,13 @@ public class ViewDistanceController {
     private static final int MAX_UPDATE_ATTEMPTS = 10;
     private static final long CLEAN_MAP_PERIOD = 1200;
     private final SeeMore seeMore;
+    private final EssentialsAfkStatusProvider afkStatusProvider;
     private final Map<UUID, Integer> clientViewDistanceMap = new ConcurrentHashMap<>();
     private final Map<UUID, Integer> targetSimulationDistanceMap = new ConcurrentHashMap<>();
     private final Map<UUID, Integer> targetViewDistanceMap = new ConcurrentHashMap<>();
     private final Map<UUID, Integer> targetSendDistanceMap = new ConcurrentHashMap<>();
     private final Map<UUID, Boolean> undergroundRestrictedMap = new ConcurrentHashMap<>();
+    private final Map<UUID, Boolean> afkRestrictedMap = new ConcurrentHashMap<>();
     private final Map<UUID, ScheduledTask> simulationDistanceUpdateTasks = new ConcurrentHashMap<>();
     private final Map<UUID, ScheduledTask> viewDistanceUpdateTasks = new ConcurrentHashMap<>();
     private final Map<UUID, ScheduledTask> sendDistanceUpdateTasks = new ConcurrentHashMap<>();
@@ -30,11 +32,22 @@ public class ViewDistanceController {
 
     public ViewDistanceController(SeeMore seeMore) {
         this.seeMore = seeMore;
+        this.afkStatusProvider = new EssentialsAfkStatusProvider(seeMore);
         this.viewDistanceUpdateLogger = new ViewDistanceUpdateLogger(seeMore);
         long undergroundCheckPeriod = Math.max(1L, seeMore.getSeeMoreConfig().underground.undergroundUpdateDelay.get());
+        long afkCheckPeriod = Math.max(1L, seeMore.getSeeMoreConfig().afk.updateDelay.get());
         seeMore.getSchedulerHook().runRepeatingTask(this::cleanMaps, CLEAN_MAP_PERIOD, CLEAN_MAP_PERIOD);
         seeMore.getSchedulerHook().runRepeatingTask(this::refreshUndergroundRestrictions, undergroundCheckPeriod, undergroundCheckPeriod);
+        seeMore.getSchedulerHook().runRepeatingTask(this::refreshAfkRestrictions, afkCheckPeriod, afkCheckPeriod);
         Bukkit.getPluginManager().registerEvents(new ViewDistanceUpdater(this), seeMore);
+    }
+
+    public EssentialsAfkStatusProvider getAfkStatusProvider() {
+        return afkStatusProvider;
+    }
+
+    public void refreshAfkForPlayer(Player player) {
+        seeMore.getSchedulerHook().runEntityTaskAsap(() -> updateAfkRestriction(player), null, player);
     }
 
     public void updateAllPlayers() {
@@ -51,7 +64,13 @@ public class ViewDistanceController {
         boolean undergroundRestricted = isUndergroundRestricted(player);
         undergroundRestrictedMap.put(player.getUniqueId(), undergroundRestricted);
 
+        boolean afkRestricted = isAfkRestricted(player);
+        afkRestrictedMap.put(player.getUniqueId(), afkRestricted);
+
         int targetSimulationDistance = getTargetSimulationDistance(player, undergroundRestricted);
+        if (afkRestricted) {
+            targetSimulationDistance = seeMore.getSeeMoreConfig().afk.simulationDistance.get();
+        }
         targetSimulationDistanceMap.put(player.getUniqueId(), targetSimulationDistance);
 
         int floor = targetSimulationDistance;
@@ -61,8 +80,13 @@ public class ViewDistanceController {
         ceiling = ceiling < 0 ? player.getWorld().getViewDistance() : ceiling;
         ceiling = applyUndergroundCap(ceiling, undergroundRestricted);
 
-        int targetViewDistance = Math.max(floor, Math.min(ceiling, clientViewDistance));
-        int targetSendDistance = Math.max(2, Math.min(ceiling, clientViewDistance)) + 1;
+        int cappedClientViewDistance = clientViewDistance;
+        if (afkRestricted) {
+            cappedClientViewDistance = Math.min(cappedClientViewDistance, seeMore.getSeeMoreConfig().afk.renderDistance.get());
+        }
+
+        int targetViewDistance = Math.max(floor, Math.min(ceiling, cappedClientViewDistance));
+        int targetSendDistance = Math.max(2, Math.min(ceiling, cappedClientViewDistance)) + 1;
         targetViewDistanceMap.put(player.getUniqueId(), targetViewDistance);
         targetSendDistanceMap.put(player.getUniqueId(), targetSendDistance);
 
@@ -129,6 +153,13 @@ public class ViewDistanceController {
         return undergroundSimulationDistance;
     }
 
+    private boolean isAfkRestricted(Player player) {
+        if (!seeMore.getSeeMoreConfig().afk.enabled.get()) {
+            return false;
+        }
+        return afkStatusProvider.isAfk(player);
+    }
+
     private boolean isUndergroundRestricted(Player player) {
         SeeMoreConfig.UndergroundSettings underground = seeMore.getSeeMoreConfig().underground;
         if (!underground.enabled.get()) {
@@ -155,6 +186,12 @@ public class ViewDistanceController {
         }
     }
 
+    private void refreshAfkRestrictions() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            seeMore.getSchedulerHook().runEntityTaskAsap(() -> updateAfkRestriction(player), null, player);
+        }
+    }
+
     private void updateUndergroundRestriction(Player player) {
         UUID playerId = player.getUniqueId();
         Boolean previousRestricted = undergroundRestrictedMap.get(playerId);
@@ -175,6 +212,44 @@ public class ViewDistanceController {
                 logUndergroundTransition(player, undergroundRestricted, previousViewDistance, targetViewDistance, previousSimulationDistance, targetSimulationDistance);
             }
         }
+    }
+
+    private void updateAfkRestriction(Player player) {
+        UUID playerId = player.getUniqueId();
+        Boolean previousRestricted = afkRestrictedMap.get(playerId);
+        boolean afkRestricted = isAfkRestricted(player);
+        if (previousRestricted != null && previousRestricted == afkRestricted) {
+            return;
+        }
+
+        int previousViewDistance = player.getViewDistance();
+        int previousSimulationDistance = player.getSimulationDistance();
+        afkRestrictedMap.put(playerId, afkRestricted);
+        setTargetViewDistance(player, clientViewDistanceMap.getOrDefault(playerId, player.getClientViewDistance()), false, previousRestricted == null);
+
+        if (previousRestricted != null && seeMore.getSeeMoreConfig().logChanges.get()) {
+            Integer targetViewDistance = targetViewDistanceMap.get(playerId);
+            Integer targetSimulationDistance = targetSimulationDistanceMap.get(playerId);
+            if (targetViewDistance != null && targetSimulationDistance != null) {
+                logAfkTransition(player, afkRestricted, previousViewDistance, targetViewDistance, previousSimulationDistance, targetSimulationDistance);
+            }
+        }
+    }
+
+    private void logAfkTransition(Player player, boolean afkRestricted, int previousViewDistance, int targetViewDistance, int previousSimulationDistance, int targetSimulationDistance) {
+        StringJoiner changeJoiner = new StringJoiner(", ");
+        if (previousViewDistance != targetViewDistance) {
+            changeJoiner.add(String.format("view distance %s -> %s", previousViewDistance, targetViewDistance));
+        }
+        if (previousSimulationDistance != targetSimulationDistance) {
+            changeJoiner.add(String.format("simulation distance %s -> %s", previousSimulationDistance, targetSimulationDistance));
+        }
+        if (changeJoiner.length() == 0) {
+            return;
+        }
+
+        String stateMessage = afkRestricted ? "Applied AFK limits" : "Removed AFK limits";
+        viewDistanceUpdateLogger.logUpdate(player, String.format("%s for %s: %s.", stateMessage, player.getName(), changeJoiner));
     }
 
     private void logUndergroundTransition(Player player, boolean undergroundRestricted, int previousViewDistance, int targetViewDistance, int previousSimulationDistance, int targetSimulationDistance) {
@@ -224,6 +299,7 @@ public class ViewDistanceController {
 
     private void cleanMaps() {
         clientViewDistanceMap.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);
+        afkRestrictedMap.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);
         undergroundRestrictedMap.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);
         simulationDistanceUpdateTasks.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);
         sendDistanceUpdateTasks.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);

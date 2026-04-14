@@ -22,12 +22,14 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
     private final AverageCommand averageCommand;
     private final ReloadCommand reloadCommand;
     private final PlayersCommand playersCommand;
+    private final AfkCommand afkCommand;
 
     public SeeMoreCommand(SeeMore seeMore) {
         this.seeMore = seeMore;
         this.averageCommand = new AverageCommand(seeMore);
         this.reloadCommand = new ReloadCommand(seeMore);
         this.playersCommand = new PlayersCommand(seeMore);
+        this.afkCommand = new AfkCommand(seeMore);
     }
 
     @Override
@@ -62,6 +64,14 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
                     return false;
                 }
             }
+            if (args[0].equalsIgnoreCase("afk")) {
+                if (sender.hasPermission("optiview.command.afk")) {
+                    return afkCommand.onCommand(sender, command, label, args);
+                } else {
+                    sender.sendMessage(NO_PERMISSION);
+                    return false;
+                }
+            }
         }
         sender.sendMessage(text("OptiView v" + seeMore.getDescription().getVersion(), NamedTextColor.GRAY));
         sender.sendMessage(empty());
@@ -73,6 +83,9 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
         }
         if (sender.hasPermission("optiview.command.players")) {
             sender.sendMessage(text("/optiview players"));
+        }
+        if (sender.hasPermission("optiview.command.afk")) {
+            sender.sendMessage(text("/optiview afk"));
         }
         return true;
     }
@@ -89,6 +102,9 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
             }
             if (sender.hasPermission("optiview.command.players")) {
                 suggestions.add("players");
+            }
+            if (sender.hasPermission("optiview.command.afk")) {
+                suggestions.add("afk");
             }
         }
 

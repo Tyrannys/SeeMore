@@ -71,5 +71,9 @@ public class SeeMore extends JavaPlugin {
     public SchedulerHook getSchedulerHook() {
         return schedulerHook;
     }
+
+    public ViewDistanceController getViewDistanceController() {
+        return viewDistanceController;
+    }
 }
 

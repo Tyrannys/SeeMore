@@ -5,6 +5,7 @@ api-version: 26.1
 authors: [froobynooby, Tyrannys]
 description: Per-player view distance based on client settings.
 folia-supported: true
+softdepend: [EssentialsX, Essentials]
 
 commands:
   optiview:
@@ -39,5 +40,11 @@ permissions:
   optiview.command.players:
     description: Access to the /optiview players command.
     default: op
+    children:
+      - optiview.command.optiview
+
+  optiview.command.afk:
+    description: Access to the /optiview afk command.
+    default: true
     children:
       - optiview.command.optiview

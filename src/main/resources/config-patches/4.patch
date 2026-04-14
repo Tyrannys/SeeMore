@@ -1,0 +1,38 @@
+[add-section]
+before=underground
+key=afk
+comment=# Additional distance restriction applied when a player is marked AFK by EssentialsX.
+
+[add-field]
+key=afk.enabled
+value=false
+comment=# Whether AFK view/simulation distance capping is enabled.
+
+[add-field]
+key=afk.update-delay
+value=100
+comment=# The delay (in ticks) between AFK checks.
+
+[add-field]
+key=afk.render-distance
+value=4
+comment=# The maximum render (view) distance while AFK.
+
+[add-field]
+key=afk.simulation-distance
+value=2
+comment=# The simulation distance while AFK.
+
+[add-section]
+key=afk.fallback
+comment=# Built-in AFK detection used when EssentialsX/Essentials is not installed.
+
+[add-field]
+key=afk.fallback.enabled
+value=true
+comment=# Whether built-in AFK detection is enabled.
+
+[add-field]
+key=afk.fallback.timeout-ticks
+value=6000
+comment=# Mark a player as AFK after this many ticks without movement/chat/commands/interactions.

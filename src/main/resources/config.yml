@@ -1,7 +1,7 @@
 # Configuration for OptiView.
 
 # Please don't change this!
-version: 3
+version: 4
 
 # The delay (in ticks) before a player's view distance is lowered after their client settings change.
 #  * This stops players overloading the server by constantly changing their view distance.
@@ -9,6 +9,28 @@ update-delay: 600
 
 # Whether the plugin should log to the console when it changes a player's view distance.
 log-changes: true
+
+# Additional distance restriction applied when a player is marked AFK by EssentialsX.
+afk:
+  # Whether AFK view/simulation distance capping is enabled.
+  enabled: false
+
+  # The delay (in ticks) between AFK checks.
+  update-delay: 100
+
+  # The maximum render (view) distance while AFK.
+  render-distance: 4
+
+  # The simulation distance while AFK.
+  simulation-distance: 2
+
+  # Built-in AFK detection used when EssentialsX/Essentials is not installed.
+  fallback:
+    # Whether built-in AFK detection is enabled.
+    enabled: true
+
+    # Mark a player as AFK after this many ticks without movement/chat/commands/interactions. 6000 ticks is 5 minutes.
+    timeout-ticks: 6000
 
 # Additional view distance restriction applied underground.
 underground:
