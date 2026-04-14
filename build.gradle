@@ -1,10 +1,10 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.gradleup.shadow' version '9.4.1'
     id 'java'
 }
 
 group 'com.froobworld'
-version '1.0.2'
+version '1.1.0'
 jar.enabled = false;
 
 repositories {
@@ -16,11 +16,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
-    compileOnly 'dev.folia:folia-api:1.19.4-R0.1-SNAPSHOT'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.14.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.14.3'
+    compileOnly 'dev.folia:folia-api:1.21.11-R0.1-SNAPSHOT'
     implementation 'com.froobworld:nab-configuration:1.0.2'
-    implementation 'org.bstats:bstats-base:3.0.1'
+    implementation 'org.bstats:bstats-base:3.2.1'
 }
 
 processResources {
