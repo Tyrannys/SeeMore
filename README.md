@@ -10,7 +10,7 @@ SeeMore is a simple Paper plugin that sets a player's server-side view distance 
 # Configuration for SeeMore.
 
 # Please don't change this!
-version: 2
+version: 3
 
 # The delay (in ticks) before a player's view distance is lowered after their client settings change.
 #  * This stops players overloading the server by constantly changing their view distance.
@@ -18,6 +18,29 @@ update-delay: 600
 
 # Whether the plugin should log to the console when it changes a player's view distance.
 log-changes: true
+
+# Additional view distance restriction applied underground.
+underground:
+  # Whether underground view distance capping is enabled.
+  enabled: true
+
+  # The delay (in ticks) between checks for whether players are underground.
+  # Defaults to the same value as update-delay.
+  update-delay: 600
+
+  # Apply the underground cap when a player goes below this Y level.
+  underground-y: 0.0
+
+  # Remove the underground cap when a player goes above this Y level.
+  surface-y: 20.0
+
+  # The maximum view distance allowed while underground.
+  # Set to -1 to disable the cap without disabling underground checks.
+  maximum-view-distance: 6
+
+  # The simulation distance to apply while underground.
+  # Set to -1 to use the world's configured simulation distance.
+  simulation-distance: 4
 
 # These settings can be specified per world.
 #  * Note: If a world is not listed here or if a setting is missing, it will use the settings listed under the default
