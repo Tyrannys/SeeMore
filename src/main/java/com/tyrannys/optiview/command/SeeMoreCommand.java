@@ -32,14 +32,14 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!sender.hasPermission("seemore.command.seemore")) {
+        if (!sender.hasPermission("optiview.command.optiview")) {
             sender.sendMessage(NO_PERMISSION);
             return false;
         }
 
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("average")) {
-                if (sender.hasPermission("seemore.command.average")) {
+                if (sender.hasPermission("optiview.command.average")) {
                     return averageCommand.onCommand(sender, command, label, args);
                 } else {
                     sender.sendMessage(NO_PERMISSION);
@@ -47,7 +47,7 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
                 }
             }
             if (args[0].equalsIgnoreCase("reload")) {
-                if (sender.hasPermission("seemore.command.reload")) {
+                if (sender.hasPermission("optiview.command.reload")) {
                     return reloadCommand.onCommand(sender, command, label, args);
                 } else {
                     sender.sendMessage(NO_PERMISSION);
@@ -55,7 +55,7 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
                 }
             }
             if (args[0].equalsIgnoreCase("players")) {
-                if (sender.hasPermission("seemore.command.players")) {
+                if (sender.hasPermission("optiview.command.players")) {
                     return playersCommand.onCommand(sender, command, label, args);
                 } else {
                     sender.sendMessage(NO_PERMISSION);
@@ -63,16 +63,16 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
                 }
             }
         }
-        sender.sendMessage(text("SeeMore v" + seeMore.getDescription().getVersion(), NamedTextColor.GRAY));
+        sender.sendMessage(text("OptiView v" + seeMore.getDescription().getVersion(), NamedTextColor.GRAY));
         sender.sendMessage(empty());
-        if (sender.hasPermission("seemore.command.reload")) {
-            sender.sendMessage(text("/seemore reload"));
+        if (sender.hasPermission("optiview.command.reload")) {
+            sender.sendMessage(text("/optiview reload"));
         }
-        if (sender.hasPermission("seemore.command.average")) {
-            sender.sendMessage(text("/seemore average"));
+        if (sender.hasPermission("optiview.command.average")) {
+            sender.sendMessage(text("/optiview average"));
         }
-        if (sender.hasPermission("seemore.command.players")) {
-            sender.sendMessage(text("/seemore players"));
+        if (sender.hasPermission("optiview.command.players")) {
+            sender.sendMessage(text("/optiview players"));
         }
         return true;
     }
@@ -81,13 +81,13 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> suggestions = new ArrayList<>();
         if (args.length == 1) {
-            if (sender.hasPermission("seemore.command.reload")) {
+            if (sender.hasPermission("optiview.command.reload")) {
                 suggestions.add("reload");
             }
-            if (sender.hasPermission("seemore.command.average")) {
+            if (sender.hasPermission("optiview.command.average")) {
                 suggestions.add("average");
             }
-            if (sender.hasPermission("seemore.command.players")) {
+            if (sender.hasPermission("optiview.command.players")) {
                 suggestions.add("players");
             }
         }

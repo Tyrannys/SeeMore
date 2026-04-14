@@ -20,7 +20,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.14.3'
     compileOnly 'dev.folia:folia-api:1.21.11-R0.1-SNAPSHOT'
     implementation 'com.froobworld:nab-configuration:1.0.2'
-    implementation 'org.bstats:bstats-base:3.2.1'
+    implementation 'org.bstats:bstats-bukkit:3.2.1'
 }
 
 processResources {

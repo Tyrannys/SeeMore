@@ -7,37 +7,37 @@ description: Per-player view distance based on client settings.
 folia-supported: true
 
 commands:
-  seemore:
-    description: The base command for SeeMore.
+  optiview:
+    description: The base command for OptiView.
 
 permissions:
-  seemore.command.*:
-    description: Access to all SeeMore subcommands.
+  optiview.command.*:
+    description: Access to all OptiView subcommands.
     default: op
     children:
-      - seemore.command.seemore
-      - seemore.command.reload
-      - seemore.command.average
-      - seemore.command.players
+      - optiview.command.optiview
+      - optiview.command.reload
+      - optiview.command.average
+      - optiview.command.players
 
-  seemore.command.seemore:
-    description: Access to the /seemore command.
+  optiview.command.optiview:
+    description: Access to the /optiview command.
     default: op
 
-  seemore.command.average:
-    description: Access to the /seemore average command.
-    default: op
-    children:
-      - seemore.command.seemore
-
-  seemore.command.reload:
-    description: Access to the /seemore reload command.
+  optiview.command.average:
+    description: Access to the /optiview average command.
     default: op
     children:
-      - seemore.command.seemore
+      - optiview.command.optiview
 
-  seemore.command.players:
-    description: Access to the /seemore players command.
+  optiview.command.reload:
+    description: Access to the /optiview reload command.
     default: op
     children:
-      - seemore.command.seemore
+      - optiview.command.optiview
+
+  optiview.command.players:
+    description: Access to the /optiview players command.
+    default: op
+    children:
+      - optiview.command.optiview

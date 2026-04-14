@@ -7,7 +7,7 @@ public class SeeMoreMetrics {
     private final Metrics metrics;
 
     public SeeMoreMetrics(SeeMore seeMore) {
-        this.metrics = new Metrics(seeMore, 18658, seeMore.getSchedulerHook()::runTask);
+        this.metrics = new Metrics(seeMore, 30745, seeMore.getSchedulerHook()::runTask);
         addCharts();
     }
 

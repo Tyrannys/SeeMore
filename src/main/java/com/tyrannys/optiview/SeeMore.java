@@ -46,12 +46,12 @@ public class SeeMore extends JavaPlugin {
     }
 
     private void registerCommand() {
-        PluginCommand pluginCommand = getCommand("seemore");
+        PluginCommand pluginCommand = getCommand("optiview");
         if (pluginCommand != null) {
             SeeMoreCommand seeMoreCommand = new SeeMoreCommand(this);
             pluginCommand.setExecutor(seeMoreCommand);
             pluginCommand.setTabCompleter(seeMoreCommand);
-            pluginCommand.setPermission("seemore.command.seemore");
+            pluginCommand.setPermission("optiview.command.optiview");
         }
     }
 
