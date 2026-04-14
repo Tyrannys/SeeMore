@@ -1,6 +1,6 @@
-package com.froobworld.seemore.command;
+package com.tyrannys.optiview.command;
 
-import com.froobworld.seemore.SeeMore;
+import com.tyrannys.optiview.SeeMore;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -80,3 +80,4 @@ public class PlayersCommand implements CommandExecutor, TabCompleter {
     }
 
 }
+

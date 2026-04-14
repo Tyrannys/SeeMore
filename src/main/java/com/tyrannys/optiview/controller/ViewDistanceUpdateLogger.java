@@ -1,7 +1,7 @@
-package com.froobworld.seemore.controller;
+package com.tyrannys.optiview.controller;
 
-import com.froobworld.seemore.SeeMore;
-import com.froobworld.seemore.scheduler.ScheduledTask;
+import com.tyrannys.optiview.SeeMore;
+import com.tyrannys.optiview.scheduler.ScheduledTask;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -30,3 +30,4 @@ public class ViewDistanceUpdateLogger {
     }
 
 }
+

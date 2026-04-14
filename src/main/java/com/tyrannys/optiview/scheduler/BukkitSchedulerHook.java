@@ -1,6 +1,6 @@
-package com.froobworld.seemore.scheduler;
+package com.tyrannys.optiview.scheduler;
 
-import com.froobworld.seemore.SeeMore;
+import com.tyrannys.optiview.SeeMore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 
@@ -67,3 +67,4 @@ public class BukkitSchedulerHook implements SchedulerHook {
     }
 
 }
+

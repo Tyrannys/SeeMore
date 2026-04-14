@@ -1,4 +1,4 @@
-package com.froobworld.seemore.metrics.charts;
+package com.tyrannys.optiview.metrics.charts;
 
 import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
@@ -10,3 +10,4 @@ public class NumberOfWorldsChart extends SimplePie {
     }
 
 }
+

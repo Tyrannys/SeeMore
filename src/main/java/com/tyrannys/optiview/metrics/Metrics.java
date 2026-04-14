@@ -1,4 +1,4 @@
-package com.froobworld.seemore.metrics;
+package com.tyrannys.optiview.metrics;
 
 import org.bstats.MetricsBase;
 import org.bstats.charts.CustomChart;

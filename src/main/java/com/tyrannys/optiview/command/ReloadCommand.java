@@ -1,6 +1,6 @@
-package com.froobworld.seemore.command;
+package com.tyrannys.optiview.command;
 
-import com.froobworld.seemore.SeeMore;
+import com.tyrannys.optiview.SeeMore;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,3 +38,4 @@ public class ReloadCommand implements CommandExecutor, TabCompleter {
         return Collections.emptyList();
     }
 }
+

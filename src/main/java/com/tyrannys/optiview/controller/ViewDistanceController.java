@@ -1,8 +1,8 @@
-package com.froobworld.seemore.controller;
+package com.tyrannys.optiview.controller;
 
-import com.froobworld.seemore.SeeMore;
-import com.froobworld.seemore.config.SeeMoreConfig;
-import com.froobworld.seemore.scheduler.ScheduledTask;
+import com.tyrannys.optiview.SeeMore;
+import com.tyrannys.optiview.config.SeeMoreConfig;
+import com.tyrannys.optiview.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -234,3 +234,4 @@ public class ViewDistanceController {
     }
 
 }
+

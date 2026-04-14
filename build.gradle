@@ -3,9 +3,9 @@ plugins {
     id 'java'
 }
 
-group 'com.froobworld'
+group 'com.tyrannys'
 version '1.1.0'
-jar.enabled = false;
+jar.enabled = false
 
 repositories {
     mavenCentral()
@@ -28,14 +28,14 @@ processResources {
 }
 
 shadowJar {
-    archiveFileName = 'SeeMore-' + project.version.toString() + '.jar';
+    archiveFileName = 'OptiView-' + project.version.toString() + '.jar';
 
-    relocate 'com.froobworld.nabconfiguration', 'com.froobworld.seemore.lib.nabconfiguration'
-    relocate 'org.bstats','com.froobworld.seemore.lib.bstats'
+    relocate 'com.froobworld.nabconfiguration', 'com.tyrannys.optiview.lib.nabconfiguration'
+    relocate 'org.bstats','com.tyrannys.optiview.lib.bstats'
 }
 
 artifacts {
-    shadowJar;
+    shadowJar
 }
 
-assemble.dependsOn(shadowJar);
+assemble.dependsOn(shadowJar)

@@ -1,12 +1,12 @@
-package com.froobworld.seemore;
+package com.tyrannys.optiview;
 
-import com.froobworld.seemore.command.SeeMoreCommand;
-import com.froobworld.seemore.config.SeeMoreConfig;
-import com.froobworld.seemore.controller.ViewDistanceController;
-import com.froobworld.seemore.metrics.SeeMoreMetrics;
-import com.froobworld.seemore.scheduler.BukkitSchedulerHook;
-import com.froobworld.seemore.scheduler.RegionisedSchedulerHook;
-import com.froobworld.seemore.scheduler.SchedulerHook;
+import com.tyrannys.optiview.command.SeeMoreCommand;
+import com.tyrannys.optiview.config.SeeMoreConfig;
+import com.tyrannys.optiview.controller.ViewDistanceController;
+import com.tyrannys.optiview.metrics.SeeMoreMetrics;
+import com.tyrannys.optiview.scheduler.BukkitSchedulerHook;
+import com.tyrannys.optiview.scheduler.RegionisedSchedulerHook;
+import com.tyrannys.optiview.scheduler.SchedulerHook;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -72,3 +72,4 @@ public class SeeMore extends JavaPlugin {
         return schedulerHook;
     }
 }
+

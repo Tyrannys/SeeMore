@@ -1,4 +1,4 @@
-package com.froobworld.seemore.controller;
+package com.tyrannys.optiview.controller;
 
 import com.destroystokyo.paper.event.player.PlayerClientOptionsChangeEvent;
 import com.google.common.collect.Sets;
@@ -41,3 +41,4 @@ public class ViewDistanceUpdater implements Listener {
     }
 
 }
+

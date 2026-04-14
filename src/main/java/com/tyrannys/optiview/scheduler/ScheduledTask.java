@@ -1,4 +1,4 @@
-package com.froobworld.seemore.scheduler;
+package com.tyrannys.optiview.scheduler;
 
 public interface ScheduledTask {
 
@@ -7,3 +7,4 @@ public interface ScheduledTask {
     boolean isCancelled();
 
 }
+

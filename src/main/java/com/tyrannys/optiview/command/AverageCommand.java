@@ -1,6 +1,6 @@
-package com.froobworld.seemore.command;
+package com.tyrannys.optiview.command;
 
-import com.froobworld.seemore.SeeMore;
+import com.tyrannys.optiview.SeeMore;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -112,3 +112,4 @@ public class AverageCommand implements CommandExecutor, TabCompleter {
     }
 
 }
+

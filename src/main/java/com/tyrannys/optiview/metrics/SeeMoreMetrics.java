@@ -1,7 +1,7 @@
-package com.froobworld.seemore.metrics;
+package com.tyrannys.optiview.metrics;
 
-import com.froobworld.seemore.SeeMore;
-import com.froobworld.seemore.metrics.charts.NumberOfWorldsChart;
+import com.tyrannys.optiview.SeeMore;
+import com.tyrannys.optiview.metrics.charts.NumberOfWorldsChart;
 
 public class SeeMoreMetrics {
     private final Metrics metrics;
@@ -16,3 +16,4 @@ public class SeeMoreMetrics {
     }
 
 }
+

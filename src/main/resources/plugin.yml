@@ -1,8 +1,8 @@
-name: SeeMore
-main: com.froobworld.seemore.SeeMore
+name: OptiView
+main: com.tyrannys.optiview.SeeMore
 version: ${version}
-api-version: 1.17
-authors: [froobynooby]
+api-version: 26.1
+authors: [froobynooby, Tyrannys]
 description: Per-player view distance based on client settings.
 folia-supported: true
 

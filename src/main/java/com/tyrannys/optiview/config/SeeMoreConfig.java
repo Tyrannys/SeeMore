@@ -1,10 +1,10 @@
-package com.froobworld.seemore.config;
+package com.tyrannys.optiview.config;
 
 import com.froobworld.nabconfiguration.*;
 import com.froobworld.nabconfiguration.annotations.Entry;
 import com.froobworld.nabconfiguration.annotations.Section;
 import com.froobworld.nabconfiguration.annotations.SectionMap;
-import com.froobworld.seemore.SeeMore;
+import com.tyrannys.optiview.SeeMore;
 import org.bukkit.World;
 
 import java.io.File;
@@ -63,3 +63,4 @@ public class SeeMoreConfig extends NabConfiguration {
     }
 
 }
+

@@ -1,6 +1,6 @@
-package com.froobworld.seemore.command;
+package com.tyrannys.optiview.command;
 
-import com.froobworld.seemore.SeeMore;
+import com.tyrannys.optiview.SeeMore;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
@@ -95,3 +95,4 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
         return StringUtil.copyPartialMatches(args[args.length - 1], suggestions, new ArrayList<>());
     }
 }
+

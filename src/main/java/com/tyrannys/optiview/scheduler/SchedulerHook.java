@@ -1,4 +1,4 @@
-package com.froobworld.seemore.scheduler;
+package com.tyrannys.optiview.scheduler;
 
 import org.bukkit.entity.Entity;
 
@@ -15,3 +15,4 @@ public interface SchedulerHook {
     ScheduledTask runEntityTaskAsap(Runnable runnable, Runnable retired, Entity entity);
 
 }
+
