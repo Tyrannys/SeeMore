@@ -1,6 +1,0 @@
-[add-field]
-key=underground.simulation-distance
-value=4
-comment=# The simulation distance to apply while underground.
-# Set to -1 to use the world's configured simulation distance.
-

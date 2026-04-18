@@ -1,0 +1,5 @@
+// BukkitSchedulerHook — compiled against Paper 1.19.4, works on all supported Paper/Spigot versions.
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT'
+    compileOnly project(':scheduler:common')
+}

@@ -1,3 +1,6 @@
 rootProject.name = 'OptiView'
 
-
+include 'plugin'
+include 'scheduler:common'
+include 'scheduler:bukkit'
+include 'scheduler:folia'

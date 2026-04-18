@@ -4,38 +4,45 @@ plugins {
 }
 
 group 'com.tyrannys'
-version '1.1.1'
+version '1.1.2'
 jar.enabled = false
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-        url "https://repo.papermc.io/repository/maven-public/"
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://repo.papermc.io/repository/maven-public/" }
+        maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     }
 }
 
+subprojects {
+    apply plugin: 'java'
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+// All source lives in subprojects; exclude root src/ from compilation
+sourceSets {
+    main { java { srcDirs = [] }; resources { srcDirs = [] } }
+    test { java { srcDirs = [] }; resources { srcDirs = [] } }
+}
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.14.3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.14.3'
-    compileOnly 'dev.folia:folia-api:1.21.11-R0.1-SNAPSHOT'
+    implementation project(':plugin')
+    implementation project(':scheduler:common')
+    implementation project(':scheduler:bukkit')
+    implementation project(':scheduler:folia')
     implementation 'com.froobworld:nab-configuration:1.0.2'
     implementation 'org.bstats:bstats-bukkit:3.2.1'
 }
 
-processResources {
-    filter { String line -> line.replace('${version}', project.version.toString()) }
-}
-
 shadowJar {
-    archiveFileName = 'OptiView-' + project.version.toString() + '.jar';
-
+    archiveFileName = 'OptiView-' + project.version.toString() + '.jar'
     relocate 'com.froobworld.nabconfiguration', 'com.tyrannys.optiview.lib.nabconfiguration'
-    relocate 'org.bstats','com.tyrannys.optiview.lib.bstats'
-}
-
-artifacts {
-    shadowJar
+    relocate 'org.bstats', 'com.tyrannys.optiview.lib.bstats'
 }
 
 assemble.dependsOn(shadowJar)

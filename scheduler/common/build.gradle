@@ -1,0 +1,5 @@
+// Provides SchedulerHook and ScheduledTask interfaces.
+// Depends on Paper API only for the Entity type used in the interface signatures.
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT'
+}

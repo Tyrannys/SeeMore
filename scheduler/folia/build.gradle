@@ -1,0 +1,17 @@
+// RegionisedSchedulerHook — compiled directly against Folia API.
+// Loaded at runtime only when Folia is detected via RegionisedSchedulerHook.isCompatible().
+dependencies {
+    compileOnly 'dev.folia:folia-api:1.21.11-R0.1-SNAPSHOT'
+    compileOnly project(':scheduler:common')
+}
+
+// Folia API is compiled for Java 21; request Java 21 artifacts on the compile classpath
+// while still producing Java 17 bytecode so the rest of the project compiles against us.
+configurations.compileClasspath {
+    attributes {
+        attribute(
+            org.gradle.api.attributes.java.TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE,
+            JavaVersion.VERSION_21.majorVersion.toInteger()
+        )
+    }
+}

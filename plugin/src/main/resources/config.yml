@@ -1,0 +1,65 @@
+# Configuration for OptiView.
+
+# Please don't change this!
+version: 4
+
+# The delay (in ticks) before a player's view distance is lowered after their client settings change.
+#  * This stops players overloading the server by constantly changing their view distance.
+update-delay: 600
+
+# Whether the plugin should log to the console when it changes a player's view distance.
+log-changes: true
+
+# Additional distance restriction applied when a player is marked AFK by EssentialsX.
+afk:
+  # Whether AFK view/simulation distance capping is enabled.
+  enabled: false
+
+  # The delay (in ticks) between AFK checks.
+  update-delay: 100
+
+  # The maximum render (view) distance while AFK.
+  render-distance: 4
+
+  # The simulation distance while AFK.
+  simulation-distance: 2
+
+  # Built-in AFK detection used when EssentialsX/Essentials is not installed.
+  fallback:
+    # Whether built-in AFK detection is enabled.
+    enabled: true
+
+    # Mark a player as AFK after this many ticks without movement/chat/commands/interactions. 6000 ticks is 5 minutes.
+    timeout-ticks: 6000
+
+# Additional view distance restriction applied underground.
+underground:
+  # Whether underground view distance capping is enabled.
+  enabled: true
+
+  # The delay (in ticks) between checks for whether players are underground.
+  # Defaults to the same value as update-delay.
+  update-delay: 600
+
+  # Apply the underground cap when a player goes below this Y level.
+  underground-y: 0.0
+
+  # Remove the underground cap when a player goes above this Y level.
+  surface-y: 20.0
+
+  # The maximum view distance allowed while underground.
+  # Set to -1 to disable the cap without disabling underground checks.
+  maximum-view-distance: 6
+
+  # The simulation distance to apply while underground.
+  # Set to -1 to use the world's configured simulation distance.
+  simulation-distance: 4
+
+# These settings can be specified per world.
+#  * Note: If a world is not listed here or if a setting is missing, it will use the settings listed under the default
+#    section.
+world-settings:
+  default:
+    # The maximum view distance a player in this world can have.
+    # Set to -1 to use the server's configured view distance for this world.
+    maximum-view-distance: -1
